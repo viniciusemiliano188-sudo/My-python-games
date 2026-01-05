@@ -1,57 +1,69 @@
 import random
-#Jeux de dés simple qu'affiche un ascii du number roll qu'est sorti
-dice_art = {
-    1: (
-        " ------- ",
-        "|       |",
-        "|   o   |",
-        "|       |",
-        " ------- "
-    ),
-    2: (
-        " ------- ",
-        "| o     |",
-        "|       |",
-        "|     o |",
-        " ------- "
-    ),
-    3: (
-        " ------- ",
-        "| o     |",
-        "|   o   |",
-        "|     o |",
-        " ------- "
-    ),
-    4: (
-        " ------- ",
-        "| o   o |",
-        "|       |",
-        "| o   o |",
-        " ------- "
-    ),
-    5: (
-        " ------- ",
-        "| o   o |",
-        "|   o   |",
-        "| o   o |",
-        " ------- "
-    ),
-    6: (
-        " ------- ",
-        "| o   o |",
-        "| o   o |",
-        "| o   o |",
-        " ------- "
-    )
+import time
+hands = {
+    "rock": [
+        "    _______",
+        "---'   ____)",
+        "      (_____)",
+        "      (_____)",
+        "      (____)",
+        "---.__(___)"
+    ],
+    "paper": [
+        "    _______",
+        "---'   ____)____",
+        "          ______)",
+        "          _______)",
+        "         _______)",
+        "---.__________)"
+    ],
+    "scissors": [
+        "    _______",
+        "---'   ____)____",
+        "          ______)",
+        "       __________)",
+        "      (____)",
+        "---.__(___)"
+    ]
 }
-def dice_roll():
-    d_rolls = int(input("How many dices you want to roll:"))
-    #loop for qui lance la variable roll(qui choisi un nombre au hasard entre 1-6) par rapport à la quantité de dés lancés
-    for roll in range(d_rolls):
-        roll = random.randint(1, 6)
-        print(roll)
-        #Ensuite on va associer la variable "line" avec la dice_art par rapport à roll et l'afficher
-        for line in dice_art[roll]:
-            print(line)
+
+options = ["rock" , "paper" , "scissors"]
+def options_display():
+    print("ROCK \nPAPER \nSCISSOR")
+def init_display():
+    for times in range(1):
+        print("--- ROCK PAPER SCISSOR GAME ---")
+        print("--- PLAY AGAINST THE MACHINE ! ---")
+beats = { "rock" : "scissor",
+          "paper" : "rock",
+          "scissor" : "paper"
+}
+init_display()
 while True:
-    dice_roll()
+    options_display()
+    player_choice = str(input("What do you choose: "))
+    computer_choice = random.choice(options)
+    print("Rock...")
+    time.sleep(0.5)
+    print("Paper...")
+    time.sleep(0.5)
+    print("Scissor...")
+    time.sleep(0.5)
+    print("!!!")
+    print(f"PLAYER ({player_choice}) vs COMPUTER ({computer_choice})")
+    #Pas trouvé de méthode pour afficher les ascii
+    for player_line in hands[player_choice]:
+        print(f"{player_line}")
+    for computer_line in hands[computer_choice]:
+        print(f"{computer_line}")
+    #On peut faire également comme ça pour qu'ils soient paralleles avec "zip"
+    #for player_line , computer_line in zip(hands[player_choice] , hands[computer_choice]):
+        #print(f"{player_line}           {computer_line}")
+
+    if computer_choice == player_choice:
+        print("It's a tie!")
+    elif beats[player_choice] == computer_choice:
+        print("You won!")
+    else:
+        print("The machine won!")
+
